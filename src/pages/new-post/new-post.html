@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>C'est à vous !</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="publishPost(postContent.value, postLink.value, base64Image);" [disabled]="postContent.value === ''">
+        Publier&nbsp;
+        <ion-icon name="send"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary" stacked>Votre message (*)</ion-label>
+      <ion-textarea #postContent type="text" placeholder="Quoi de neuf, docteur ?"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Ajouter un lien en bonus</ion-label>
+      <ion-input #postLink type="url" placeholder="Le lien en question" clearInput></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="base64Image || videoIframe" class="media-wrapper">
+    <img *ngIf="base64Image" [src]="base64Image" img-src="base64Image" >
+    <div [innerHtml]="videoIframe" *ngIf="videoIframe" class="card"></div>
+    <ion-fab right top>
+      <button (click)="removeMedia()" ion-fab class="fab-map" color="danger">
+        <ion-icon name='close'></ion-icon>
+      </button>
+    </ion-fab>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="!base64Image && !videoIframe">
+  <ion-toolbar color="primary">
+    <ion-buttons>
+      <button *ngIf="loggedUser.is_superuser" ion-button icon-left (click)="presentActionSheet();">
+        <ion-icon name="camera"></ion-icon>&nbsp;<ion-icon name="videocam"></ion-icon>
+        <div>Embellir mon message</div>
+      </button>
+      <button *ngIf="!loggedUser.is_superuser" ion-button icon-left (click)="presentActionSheet();">
+        <ion-icon name="camera"></ion-icon>
+        <div>Embellir mon message</div>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,50 @@
+<ion-header>
+
+  <ion-toolbar color="primary">
+    <ion-title>
+      {{ post.reply_set.length }} {{ post.reply_set.length | i18nPlural: commentMessageMapping }}
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios" color="light">Retour</span>
+        <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content class="list-avatar-page">
+  <ion-list>
+    <ion-list-header *ngIf="post.reply_set.length">Ca discute dur ici... :)</ion-list-header>
+    <ion-list-header *ngIf="!post.reply_set.length">Rien à signaler ici : lancez-vous !</ion-list-header>
+    <!-- <ion-list-header *ngIf="comments">Ca discute dur... :)</ion-list-header> -->
+
+    <ion-item *ngFor="let comment of post.reply_set">
+      <div id="{{ comment.id }}"></div>
+      <div #popoverTest id="{{ comment.id }}"></div>
+
+      <ion-avatar item-left>
+        <img [src]="comment.user.profile_avatar_url" (click)="goToProfile(comment.user.id)">
+      </ion-avatar>
+      <button *ngIf="comment.user.username === loggedUser.username || loggedUser.is_superuser" ion-button clear icon-only class="float-right" (click)="presentPopover($event, comment.id)">
+        <ion-icon name='trash'></ion-icon>
+      </button>
+      <h2>{{ comment.user.username }}</h2>
+      <p>{{ comment.content }}</p>
+      <ion-note><time>{{ comment.date }}</time></ion-note>
+    </ion-item>
+
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-input #inputComment type="text" placeholder="C'est ici que ça se passe"></ion-input>
+    <ion-buttons end [hidden]="inputComment.value === ''">
+      <button ion-button icon-right (click)="publishComment(inputComment.value, post.id); inputComment.value=''">
+        <ion-icon name="send"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

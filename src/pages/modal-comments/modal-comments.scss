@@ -1,0 +1,46 @@
+page-modal-comments {
+  .list-avatar-page {
+    ion-note {
+      font-size: 12px;
+      align-self: flex-start;
+      margin-top: 14px;
+    }
+
+    // Adjust font-weight for comments authors
+    h2{
+      font-weight: 900;
+    }
+
+    // Comments are in black and not overflow-hidden
+    p{
+      color: #000;
+      white-space: normal;
+    }
+
+    // Adjust font-size and margin for comments dates
+    time{
+      font-size: 12px;
+      margin-top: 14px;
+    }
+  }
+
+  // Adjust margin for comment input and send button
+  ion-toolbar {
+    ion-input {
+      margin-left: 10px;
+    }
+    ion-buttons {
+      margin-right: 10px;
+    }
+  }
+
+  // Increase size of modal close icon
+  ion-icon.ion-md-close {
+    font-size: 25px;
+  }
+
+  // Float right for trash icons
+  .float-right {
+    float: right;
+  }
+}

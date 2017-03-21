@@ -1,0 +1,55 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title *ngIf="isLoggedUser">C'est moi !</ion-title>
+    <ion-title *ngIf="!isLoggedUser">Profile de {{user.username}}</ion-title>
+    <!-- <ion-buttons end>
+      <button ion-button icon-only (click)="saveUser();">
+        OK&nbsp; -->
+        <!-- <ion-icon name="checkmark"></ion-icon> -->
+      <!-- </button>
+    </ion-buttons> -->
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+    <img *ngIf="user.profile_avatar_url" src="{{ user.profile_avatar_url }}">
+    <ion-card-content>
+      <ion-card-title>
+        <span *ngIf="isLoggedUser">Vos informations</span>
+        <span *ngIf="!isLoggedUser">Informations du profil</span>
+      </ion-card-title>
+
+      <ion-list>
+        <ion-item>
+          <ion-label stacked>Identifiant</ion-label>
+          <ion-input type="text" value="{{ user.username }}" disabled></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Email</ion-label>
+          <ion-input type="text" value="{{ user.email }}" disabled></ion-input>
+          <!-- <ion-input type="text" value="{{ user.email }}" [disabled]="!isLoggedUser"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Inscription</ion-label>
+          <ion-input type="text" value="{{ user.date_joined }}" disabled></ion-input>
+        </ion-item>
+        <ion-item *ngIf="user.is_superuser">
+          <ion-label *ngIf="isLoggedUser" stacked>Vous êtes administrateur de l'application.</ion-label>
+          <ion-label *ngIf="!isLoggedUser" stacked>{{ user.username }} est administrateur de l'application.</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="user.username === loggedUser.username" class="button-wrapper">
+    <button ion-button full (click)="logoutApp();">Déconnexion</button>
+  </div>
+</ion-content>

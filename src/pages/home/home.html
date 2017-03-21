@@ -1,0 +1,76 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Babyblog</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<!-- <ion-content> -->
+<ion-content>
+
+  <ion-refresher (ionRefresh)="getPosts($event)" pullMax= "500">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Ya du nouveau ?"
+      refreshingSpinner="circles"
+      refreshingText="Work in progress...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="button-wrapper">
+    <button ion-button full large (click)="goToNewPost();" color="secondary"><span>{{ loggedUser?.username }}, participez !</span></button>
+  </div>
+
+  <ion-card *ngFor="let post of posts">
+
+    <div id="{{ post.id }}"></div>
+    <div #popoverTest id="{{ post.id }}"></div>
+    <ion-item>
+      <ion-avatar item-left>
+        <img [src]="post.user.profile_avatar_url" (click)="goToProfile(post.user.id)">
+      </ion-avatar>
+      <button *ngIf="post.user.username === loggedUser.username || loggedUser.is_superuser" ion-button icon-only item-right (click)="presentPopover($event, post.id)" class="more">
+        <ion-icon name="more"></ion-icon>
+      </button>
+      <h2>{{ post.user.username }}</h2>
+      <p>{{ post.date }}</p>
+    </ion-item>
+
+    <div *ngIf="post.videoUrl" class="video-container">
+      <iframe width="560" height="315" [src]="post.safeVideoUrl" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <img *ngIf="post.image" src="{{ post.image }}" imageViewer>
+
+    <ion-card-content>
+      <p>{{ post.content }}</p>
+      <p><a *ngIf="post.link" (click)="openUrl(post.link)">{{ post.link }}</a></p>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small (click)="openCommentsModal(post.id);">
+          <ion-icon name="chatbubbles"></ion-icon>
+          <div>{{ post.reply_set.length }} {{ post.reply_set.length | i18nPlural: postMessageMapping }}</div>
+        </button>
+      </ion-col>
+      <ion-col center text-center>
+        <!-- <button ion-button icon-left clear small>
+          <ion-icon name="share-alt"></ion-icon>
+          <div>Share</div>
+        </button> -->
+      </ion-col>
+      <ion-col center text-center>
+        <!-- <ion-note>
+          11h ago
+        </ion-note> -->
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+</ion-content>

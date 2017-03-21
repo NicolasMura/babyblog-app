@@ -1,0 +1,10 @@
+page-profile {
+  .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block,
+  .list-md .item-input:last-child {
+    border-bottom: none;
+  }
+
+  .button-wrapper {
+    margin: 10px;
+  }
+}

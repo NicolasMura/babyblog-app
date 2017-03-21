@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Connexion</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="login-content">
+  <ion-list>
+      <ion-item>
+          <!-- <ion-label floating>Votre identifiant</ion-label> -->
+          <ion-input [(ngModel)] = "username" type="text" placeholder="Votre identifiant"></ion-input>
+      </ion-item>
+      <ion-item>
+          <!-- <ion-label floating>Votre mot de passe</ion-label> -->
+          <ion-input [(ngModel)] = "password" type="password" placeholder="Votre mot de passe"></ion-input>
+      </ion-item>
+  </ion-list>
+
+  <div padding>
+    <button ion-button block (click)="login(username, password)">Gooooo !</button>
+  </div>
+</ion-content>
