@@ -5,26 +5,57 @@ A private & secured social blog for connected families, based on Angular 2 and I
 History
 =======
 
-Babyblog App project is born with the purpose to give families with new-born child a simple and direct way to keep in touch and stay connected to their relatives, sharing pictures, videos or links. As a newly daddy, I was the first (happy !) user of this app.
+Babyblog App project was born with the wish to give families with new-born child a simple and direct way to keep in touch and stay connected to their relatives, sharing pictures, videos or links. As a newly daddy, I was the first (and happy !) user of this app. I hope you will enjoy using it too :)
 
 This project currently runs with Angular 2 and Ionic 2.
 
-.. Additionnaly, Babyblog App is connected to a web-based blog available `here <http://mylittlebaby.cloud/>`_, through a basic REST Api.
+Babyblog App is connected to a web-based blog available `here <http://mylittlebaby.cloud/>`_, through a REST Api.
 
-.. You can see a live demo `here <http://vps121400.ovh.net/>`_.
+You can see a live demo running `here <http://vps121400.ovh.net:8100/ionic-lab>`_.
+
+.. .. image:: https://raw.githubusercontent.com/NicolasMura/social-wall/master/social/static/social/img/social-wall-demo.jpg
+..     :alt: Social Wall Preview
+..     :target: http://vps121400.ovh.net/
 
 Requirements
 ============
 
+* `Node JS <https://nodejs.org/en/>`_ with NPM
 * `Angular 2 <https://angular.io/>`_
 * `Ionic 2 <http://ionic.io/2>`_
 
 Setup
 =====
 
+Before you can test the Babyblog App locally, you will need to install and run the `Django based app server <https://github.com/NicolasMura/babyblog>`_, which comes with a REST Api.
+
+Quick start
+===========
+
+With above requirements & setup statisfied, you can easily clone this project and start playing:
+
 .. code-block:: shell
 
-    TO DO...
+    npm install
+
+You will also need to add a src/config/environment-dev.ts file with following content:
+
+.. code-block:: typescript
+
+    export const ENV = {
+      PRODUCTION   : false,
+      API_URL_API  : 'http://localhost:8000/api/',
+      AUTH_URL     : 'http://localhost:8000/o',
+      CLIENT_ID    : '<CLIENT_ID>',
+      GRANT_TYPE_PASSWORD : 'password',
+      GRANT_TYPE_REFRESH  : 'refresh_token'
+    };
+
+Finally, run the integrated ionic server with:
+
+.. code-block:: shell
+
+    ionic serve --browser "google chrome"
 
 Improvments in the pipeline
 ===========================
@@ -43,12 +74,6 @@ Improvments in the pipeline
 Notes
 =====
 
-* Any suggestion and / or improvment's idea is welcome !
+Any suggestion and / or improvment's idea is welcome !
 
-.. Preview
-.. =======
-
-.. .. image:: https://raw.githubusercontent.com/NicolasMura/social-wall/master/social/static/social/img/social-wall-demo.jpg
-..     :alt: Social Wall Preview
-..     :target: http://vps121400.ovh.net/
 

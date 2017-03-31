@@ -98,7 +98,7 @@ export class AuthService {
             console.log('ERREUR - CONNEXION REFUSED !');
             let prompt = this.alertCtrl.create({
               title: 'Erreur',
-              message: "Oups... il semble que le serveur ne soit pas très en forme. Envoyez-nous un petit mail, nous le secouerons peut-être un peu.",
+              message: "Oups... il semble que le serveur ne soit pas très en forme. Envoyez-nous un petit mail, nous le secouerons un peu.",
               buttons: [
                 {
                   text: 'OK'
