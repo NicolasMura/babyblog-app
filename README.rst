@@ -9,9 +9,9 @@ Babyblog App project was born with the wish to give families with new-born child
 
 This project currently runs with Angular 2 and Ionic 2.
 
-Babyblog App is connected to a web-based blog available `here <http://mylittlebaby.cloud/>`_, through a REST Api.
+Babyblog App is connected to a web-based blog available `here <http://entrepreneur-digital.com/>`_, through a REST Api.
 
-You can see a live demo running `here <http://vps121400.ovh.net:8100/ionic-lab>`_.
+You can see a live demo running `here <http://vps121400.ovh.net>`_.
 
 .. image:: https://github.com/NicolasMura/babyblog-app-demo/blob/master/assets/img/projet-babyblog.png
     :alt: Babyblog App Preview
