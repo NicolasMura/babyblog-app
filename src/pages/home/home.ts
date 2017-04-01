@@ -7,6 +7,7 @@ import { InAppBrowser } from 'ionic-native';
 import { Post } from '../../models/post';
 import { User } from '../../models/user';
 import { ModalCommentsPage } from '../../pages/modal-comments/modal-comments';
+import { LoginPage } from '../../pages/login/login';
 import { NewPostPage } from '../../pages/new-post/new-post';
 import { ProfilePage } from '../../pages/profile/profile';
 import { AuthService } from '../../providers/auth-service';
@@ -49,11 +50,39 @@ export class HomePage {
     this.menuCtrl.enable(true);
 
     // Check token validity, refresh if needed
-    this.authService.checkTokenValidity('HomePage');
+    var check = this.authService.checkTokenValidity('HomePage');
+    console.log('CHECK :');
+    console.log(check);
+    if(!check) {
+      this.authService.getNewToken(this.authService.refreshToken)
+        .then(success => {
+          if(success) {
+            console.log('getNewToken Success !');
+          } else {
+            console.log('getNewToken Failed !');
+            // Workaround - TO BE TESTED
+            let prompt = this.alertCtrl.create({
+              title: 'Comme c\'est dommage !',
+              message: 'Votre session a expiré, vous devez vous reconnecter.',
+              buttons: [
+                {
+                  text: 'OK',
+                  handler: () => {
+                    console.log('Redirection to login page');
+                    this.authService.logout();
+                    this.navCtrl.setRoot(LoginPage, {}, {animate: true, direction: 'forward'});
+                  }
+                }
+              ]
+            });
+            prompt.present();
+          }
+        });
+    }
 
-    // Get posts
+    // Get users & posts
     var refresher = false;
-    // var is_refreshed = false;
+    this.getUsers();
     this.getPosts(refresher);
   }
 
@@ -63,6 +92,30 @@ export class HomePage {
 
   ionViewWillEnter() {
 
+  }
+
+  getUsers() {
+    this.users = [];
+
+    // Retrieve all users
+    this.usersService.getAllUsers().subscribe(
+      retrievedUsers => {
+        retrievedUsers.forEach((user, key) => {
+          this.users.push(user);
+          // Replace date_joined by humanized date
+          this.users[key].date_joined = this.miscService.getHumanDate(this.users[key].date_joined);
+        });
+
+        console.log('Users :');
+        console.log(this.users);
+
+        // Retrieve loggedUser
+        var username = this.authService.loggedUserUsername;
+        this.usersService.users = this.users // Update users array
+        this.loggedUser = this.usersService.getLoggedUser(username);
+        // Replace date_joined by humanized date
+        this.loggedUser.date_joined = this.miscService.getHumanDate(this.loggedUser.date_joined);
+      });
   }
 
   getPosts(refresher) {
@@ -108,20 +161,6 @@ export class HomePage {
 
             console.log('Posts :');
             console.log(this.posts);
-
-            // Retrieve all users
-            this.users = this.usersService.users;
-
-            // For each user, replace date_joined by humanized date
-            this.users.forEach((user, key) => {
-              this.users[key].date_joined = this.miscService.getHumanDate(this.users[key].date_joined);
-            });
-
-            // Retrieve loggedUser
-            var username = this.authService.loggedUserUsername;
-            this.loggedUser = this.usersService.getLoggedUser(username);
-            // Replace date_joined by humanized date
-            this.loggedUser.date_joined = this.miscService.getHumanDate(this.loggedUser.date_joined);
 
             if(refresher) {
               console.log('End refresh !');

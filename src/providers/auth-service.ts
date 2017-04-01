@@ -27,7 +27,7 @@ export class AuthService {
 
   constructor(
     public http: Http,
-    private alertCtrl: AlertController,
+    private alertCtrl: AlertController
   ) {
     console.log('Hello AuthService Provider');
     this.http = http;
@@ -143,10 +143,10 @@ export class AuthService {
     console.log(delta);
 
     if (delta > 18000) {
-      console.log("Token has expired --> get a new token");
-      // console.log(this.refreshToken);
-      this.getNewToken(this.refreshToken);
+      console.log("Token has expired --> try to get a new token");
+      return false;
     }
+    return true;
   }
 
   getNewToken(refreshToken) {

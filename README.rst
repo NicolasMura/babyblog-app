@@ -13,9 +13,9 @@ Babyblog App is connected to a web-based blog available `here <http://mylittleba
 
 You can see a live demo running `here <http://vps121400.ovh.net:8100/ionic-lab>`_.
 
-.. .. image:: https://raw.githubusercontent.com/NicolasMura/social-wall/master/social/static/social/img/social-wall-demo.jpg
-..     :alt: Social Wall Preview
-..     :target: http://vps121400.ovh.net/
+.. image:: https://github.com/NicolasMura/babyblog-app-demo/blob/master/assets/img/projet-babyblog.png
+    :alt: Babyblog App Preview
+    :target: http://vps121400.ovh.net
 
 Requirements
 ============

@@ -67,7 +67,7 @@ export class UsersService {
       .map(res => <User>res.json());
   }
 
-  // Find a post key inside an arraw of posts, given his id
+  // Find logged user inside an arraw of users, given his username
   getLoggedUser(username) {
     let userKey;
     this.users.forEach(function(value, key) {
