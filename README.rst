@@ -9,7 +9,7 @@ Babyblog App project was born with the wish to give families with new-born child
 
 This project currently runs with Angular 2 and Ionic 2.
 
-Babyblog App is connected to a web-based blog available `here <http://entrepreneur-digital.com/>`_, through a REST Api.
+Babyblog App is connected to a web-based blog available `here <https://github.com/NicolasMura/babyblog>`_, through a REST Api.
 
 You can see a live demo running `here <http://vps121400.ovh.net>`_.
 
@@ -24,10 +24,8 @@ Requirements
 * `Angular 2 <https://angular.io/>`_
 * `Ionic 2 <http://ionic.io/2>`_
 
-Setup
-=====
+Additionnaly, before you can test the Babyblog App locally, you will need to install and run locally the `Django based app server <https://github.com/NicolasMura/babyblog>`_, which interact with the Babyblog App through a REST Api.
 
-Before you can test the Babyblog App locally, you will need to install and run the `Django based app server <https://github.com/NicolasMura/babyblog>`_, which comes with a REST Api.
 
 Quick start
 ===========
