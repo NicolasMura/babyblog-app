@@ -25,7 +25,7 @@
       <div #popoverTest id="{{ comment.id }}"></div>
 
       <ion-avatar item-left>
-        <img [src]="comment.user.profile_avatar_url" (click)="goToProfile(comment.user.id)">
+        <img [src]="comment.user.profile_avatar_url" (tap)="goToProfile(comment.user.id)">
       </ion-avatar>
       <button *ngIf="comment.user.username === loggedUser.username || loggedUser.is_superuser" ion-button clear icon-only class="float-right" (click)="presentPopover($event, comment.id)">
         <ion-icon name='trash'></ion-icon>

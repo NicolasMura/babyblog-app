@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { User } from '../models/user';
-import { AuthService } from '../providers/auth-service';
-
 @Injectable()
 export class MiscService {
 
@@ -13,7 +10,6 @@ export class MiscService {
     var objectKey = null;
     objectList.forEach(function(value, key) {
       if (value.id == objectId) {
-        console.log('Found object key : ' + key);
         objectKey = key;
       }
     });

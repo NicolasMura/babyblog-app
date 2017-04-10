@@ -42,12 +42,14 @@ You will also need to add a src/config/environment-dev.ts file with following co
 
     export const ENV = {
       PRODUCTION   : false,
-      API_URL_API  : 'http://localhost:8000/api/',
-      AUTH_URL     : 'http://localhost:8000/o',
+      API_URL_API  : 'http://<HOST_ADRESSE:PORT>/api/',
+      AUTH_URL     : 'http://<HOST_ADRESSE:PORT>/o',
       CLIENT_ID    : '<CLIENT_ID>',
       GRANT_TYPE_PASSWORD : 'password',
       GRANT_TYPE_REFRESH  : 'refresh_token'
     };
+
+For local development, your <HOST_ADRESSE:PORT> could possibly be localhost:8000 (ie default address for Django dev server).
 
 Finally, run the integrated ionic server with:
 

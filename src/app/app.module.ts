@@ -1,6 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { CheckCredentialsPage } from '../pages/check-credentials/check-credentials';
 import { LoginPage } from '../pages/login/login';
 import { HomePage, HomePagePopover } from '../pages/home/home';
@@ -49,6 +50,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    InAppBrowser,
     HomePage,      // (to remove ?)
     AuthService,
     PostsService,

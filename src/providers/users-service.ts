@@ -76,8 +76,8 @@ export class UsersService {
       }
     });
     this.loggedUser = this.users[userKey];
-    console.log('User trouvé (' + this.loggedUser.username + ') ! Dispo @ this.profile :');
-    console.log(this.loggedUser);
+    // console.log('User trouvé (' + this.loggedUser.username + ') ! Dispo @ this.profile :');
+    // console.log(this.loggedUser);
     return this.loggedUser;
   }
 

@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { AlertController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { User } from '../models/user';
-import { UsersService } from '../providers/users-service';
 
 // use the 'environment-dev' as the default import(!)
 // See https://github.com/driftyco/ionic-app-scripts/issues/760

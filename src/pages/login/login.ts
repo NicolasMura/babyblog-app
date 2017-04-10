@@ -3,7 +3,6 @@ import { NavController, AlertController, LoadingController, Loading, MenuControl
 
 import { AuthService }   from '../../providers/auth-service';
 import { HomePage } from '../home/home';
-import { User } from '../../models/user';
 
 @Component({
   selector: 'page-login',

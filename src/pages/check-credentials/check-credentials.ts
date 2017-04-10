@@ -32,11 +32,6 @@ export class CheckCredentialsPage {
     var isLoggedin = this.authService.isLoggedin;
     var username = this.authService.loggedUserUsername;
     var tokenStartDate = this.authService.tokenStartDate;
-    console.log('token : ' + token);
-    console.log('refreshToken : ' + refreshToken);
-    console.log('username : ' + username);
-    console.log('isLoggedin : ' + isLoggedin);
-    console.log('tokenStartDate : ' + tokenStartDate);
 
     // Redirect if user already have credentials (à déplacer ?)
     if(!isLoggedin){

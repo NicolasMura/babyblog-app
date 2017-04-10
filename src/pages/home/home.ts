@@ -1,8 +1,8 @@
 import 'rxjs/add/operator/switchMap';
-import { Component, ViewChild, ElementRef, Pipe, PipeTransform } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavController, AlertController, Loading, LoadingController, ModalController, NavParams, Platform, ViewController, PopoverController, MenuController } from 'ionic-angular';
-import { InAppBrowser } from 'ionic-native';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { Post } from '../../models/post';
 import { User } from '../../models/user';
@@ -15,7 +15,6 @@ import { PostsService } from '../../providers/posts-service';
 import { UsersService } from '../../providers/users-service';
 import { MiscService } from '../../providers/misc-service';
 
-@Pipe({ name: 'safe' })
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
@@ -25,9 +24,10 @@ export class HomePage {
   @ViewChild('popoverTest', { read: ElementRef }) test: ElementRef;
 
   loading: Loading;
-  posts: Post[] = [];
+  posts: Post[];
   users: User[];
   loggedUser: User;
+  hasNoPosts: boolean;
   // For pluralize purpose
   postMessageMapping:
     {[k: string]: string} = {'=0': 'commentaire', '=1': 'commentaire', 'other': 'commentaires'};
@@ -44,8 +44,11 @@ export class HomePage {
     private popoverCtrl: PopoverController,
     private menuCtrl: MenuController,
     public platform: Platform,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private iab: InAppBrowser
   ) {
+    // By defaut, we consider that there is at least 1 post
+    this.hasNoPosts = false;
     // Enable menu (used if no login step)
     this.menuCtrl.enable(true);
 
@@ -135,6 +138,10 @@ export class HomePage {
         // Version with Observable
         this.postsService.getAllPosts().subscribe(
           retrievedPosts => {
+            if(retrievedPosts.length == 0) {
+              this.hasNoPosts = true;
+            }
+
             // For each post, sanitize video URLs (if any) + get human dates and times
             retrievedPosts.forEach((post, key) => {
               // Sanitize post video URL (if any)
@@ -228,7 +235,7 @@ export class HomePage {
     popover.onDidDismiss(data => {
       console.log('Event : fermeture popover !');
       if(data != null) {
-        var confirm = this.presentAlert("Olà !", "Vous êtes sur le point d'envoyer définitivement ce message aux oubliettes.", postId);
+        this.presentAlert("Olà !", "Vous êtes sur le point d'envoyer définitivement ce message aux oubliettes.", postId);
       }
     })
   }
@@ -253,6 +260,10 @@ export class HomePage {
                   console.log(response);
                   this.posts.forEach((post, key) => {
                     if (post.id === postId) { this.posts.splice(key, 1); }
+                    // Update hasNoPosts if necessary
+                    if(this.posts.length == 0) {
+                      this.hasNoPosts = true;
+                    }
                   });
                   // Hide loader
                   this.loading.dismiss();
@@ -272,10 +283,8 @@ export class HomePage {
   }
 
   goToProfile(userId) {
-    console.log('Go to user id = ' + userId + ' !');
     // Find user key in users array
     let userKey = this.miscService.findObjectKey(userId, this.users);
-    console.log(userKey);
     // Get user
     let user = this.users[userKey];
     console.log(user);
@@ -286,7 +295,7 @@ export class HomePage {
   // Open an URL via InAppBrowser
   openUrl(url) {
     this.platform.ready().then(() => {
-      let browser = new InAppBrowser(url, '_system');
+      this.iab.create(url, "_blank");
     });
   }
 

@@ -16,15 +16,12 @@ let BABYBLOG_POSTS_URL_API = ENV.API_URL_API + 'posts';
 
 @Injectable()
 export class PostsService {
-  // token;
 
   constructor(
     public http: Http,
     private authservice: AuthService
   ) {
     console.log('Hello PostsService Provider');
-    // this.isLoggedin = this.authservice.isLoggedin;
-    // this.token = this.authservice.token;
   }
 
   // Load all babyblog posts
@@ -36,16 +33,6 @@ export class PostsService {
       .get(BABYBLOG_POSTS_URL_API, {headers: headers})
       .map(res => <Post[]>res.json());
   }
-  // getAllPosts(): Promise<Post[]> {
-  //   var headers = new Headers();
-  //   this.authservice.loadUserCredentials();
-  //   headers.append('Authorization', 'Bearer ' + this.authservice.token);
-  //   return this.http
-  //     .get(BABYBLOG_POSTS_URL_API, {headers: headers})
-  //     .toPromise()
-  //     .then(res => res.json().data as Post[])
-  //     .catch(this.handleError);
-  // }
 
   // Load a post
   getPost(id: number): Observable<Post> {
@@ -56,19 +43,9 @@ export class PostsService {
       .get(`${BABYBLOG_POSTS_URL_API}/${id}/`, {headers: headers})
       .map(res => <Post>res.json());
   }
-  // getPost(id: number): Promise<Post> {
-  //   var headers = new Headers();
-  //   this.authservice.loadUserCredentials();
-  //   headers.append('Authorization', 'Bearer ' + this.authservice.token);
-  //   return this.http
-  //     .get(`${this.babyblogUrlApi}/posts/${id}/`, {headers: headers})
-  //     .toPromise()
-  //     .then(response => response.json().data as Post)
-  //     .catch(this.handleError);
-  // }
 
   // Create a post
-  createPost(username: string, content: string, link: string, image: string, videoUrl: string): Promise<Post> {
+  createPost(username: string, content: string, link: string, image: string, videoUrl: string): Observable<Post> {
     var headers = new Headers();
     this.authservice.loadUserCredentials();
     headers.append('Content-Type', 'application/json');
@@ -90,13 +67,14 @@ export class PostsService {
 
     return this.http
       .post(`${BABYBLOG_POSTS_URL_API}/create`, JSON.stringify(data), {headers: headers})
-      .toPromise()
-      .then(res => {
-        console.log('Nouveau post :');
-        console.log(res);
-        <Post>res.json();
-      })
-      .catch(this.handleError);
+      // .toPromise()
+      // .then(res => {
+      //   console.log('Nouveau post :');
+      //   console.log(res);
+      //   <Post>res.json();
+      // })
+      // .catch(this.handleError);
+      .map(res => <Post>res.json());
   }
 
   // Create a comment
@@ -142,9 +120,9 @@ export class PostsService {
     // To do...
   }
 
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);  // for demo purpose only
-    return Promise.reject(error.message || error);
-  }
+  // private handleError(error: any): Promise<any> {
+  //   console.error('An error occurred', error);  // for demo purpose only
+  //   return Promise.reject(error.message || error);
+  // }
 
 }

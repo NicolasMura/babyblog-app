@@ -1,10 +1,9 @@
 import 'rxjs/add/operator/switchMap';
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, Loading, LoadingController, ModalController, NavParams, Platform, ViewController, PopoverController, AlertController } from 'ionic-angular';
+import { NavController, Loading, LoadingController, NavParams, Platform, ViewController, PopoverController, AlertController } from 'ionic-angular';
 
 import { User } from '../../models/user';
 import { Post } from '../../models/post';
-import { NewPostPage } from '../../pages/new-post/new-post';
 import { ProfilePage } from '../../pages/profile/profile';
 import { AuthService } from '../../providers/auth-service';
 import { PostsService } from '../../providers/posts-service';
@@ -106,7 +105,7 @@ export class ModalCommentsPage {
     popover.onDidDismiss(data => {
       console.log('Event : fermeture popover !');
       if(data != null) {
-        var confirm = this.presentAlert("Olà !", "Vous êtes sur le point d'envoyer définitivement ce commentaire aux oubliettes.", commentId);
+        this.presentAlert("Olà !", "Vous êtes sur le point d'envoyer définitivement ce commentaire aux oubliettes.", commentId);
       }
     })
   }
@@ -155,10 +154,8 @@ export class ModalCommentsPage {
   }
 
   goToProfile(userId) {
-    console.log('Go to user id = ' + userId + ' !');
     // Find user key in users array
     let userKey = this.miscService.findObjectKey(userId, this.users);
-    console.log(userKey);
     // Get user
     let user = this.users[userKey];
     console.log(user);

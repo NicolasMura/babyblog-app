@@ -26,7 +26,7 @@
     <button ion-button full large (click)="goToNewPost();" color="secondary"><span>{{ loggedUser?.username }}, participez !</span></button>
   </div>
 
-  <ion-card *ngIf='!posts.length'>
+  <ion-card *ngIf='hasNoPosts'>
     <ion-card-header>
       Hum !
     </ion-card-header>
@@ -41,7 +41,7 @@
     <div #popoverTest id="{{ post.id }}"></div>
     <ion-item>
       <ion-avatar item-left>
-        <img [src]="post.user.profile_avatar_url" tappable (click)="goToProfile(post.user.id)">
+        <img [src]="post.user.profile_avatar_url" (tap)="goToProfile(post.user.id)">
       </ion-avatar>
       <button *ngIf="post.user.username === loggedUser.username || loggedUser.is_superuser" ion-button icon-only item-right (click)="presentPopover($event, post.id)" class="more">
         <ion-icon name="more"></ion-icon>

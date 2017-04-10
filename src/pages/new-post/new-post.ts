@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { ActionSheetController, AlertController, ToastController, LoadingController, NavController, Platform, Loading } from 'ionic-angular';
-import { Camera, File, Transfer, FilePath, BackgroundMode, YoutubeVideoPlayer } from 'ionic-native';
+import { Camera, BackgroundMode } from 'ionic-native';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { User } from '../../models/user';
-import { Post } from '../../models/post';
 import { HomePage } from '../../pages/home/home';
 import { AuthService } from '../../providers/auth-service';
 import { UsersService } from '../../providers/users-service';
@@ -19,7 +18,6 @@ declare var cordova: any;
 export class NewPostPage {
   loading: Loading;
 
-  posts;
   loggedUser: User;
 
   // Test
@@ -53,9 +51,13 @@ export class NewPostPage {
 
   public presentActionSheet() {
     let actionSheet;
+    // console.log(this.platform.is('ios'));
+    // console.log(this.platform.is('android'));
+    // console.log(this.platform.is('mobileweb'));
+    var title = this.platform.is('mobileweb') ? "Ajouter un média (NB  : seul l'ajout de vidéo est fonctionnel en mode web)" : "Ajouter un média";
     if(this.loggedUser.is_superuser) {
       actionSheet = this.actionSheetCtrl.create({
-        title: 'Ajouter un média',
+        title: title,
         buttons: [
           {
             text: 'Farfouiller dans ma bibliothèque',
@@ -89,7 +91,7 @@ export class NewPostPage {
       });
     } else {
       actionSheet = this.actionSheetCtrl.create({
-        title: 'Ajouter un média',
+        title: title,
         buttons: [
           {
             text: 'Farfouiller dans ma bibliothèque',
@@ -142,7 +144,7 @@ export class NewPostPage {
   public presentVideoPromptAlert() {
     let prompt = this.alertCtrl.create({
       title: 'A vous de jouer !',
-      message: "Saisissez l'ID de votre vidéo Youtube",
+      message: "Saisissez l'URL de votre vidéo Youtube<br>(NB : l'URL doit être au format<br>https://youtu.be/[VIDEO_ID])",
       inputs: [
         {
           name: 'text',
@@ -246,7 +248,7 @@ export class NewPostPage {
       }
 
       this.postsService.createPost(username, content, link, image, this.videoUrl)
-        .then(() => {
+        .subscribe(() => {
           this.goToHome();
         }, error => {
           console.log(error);
